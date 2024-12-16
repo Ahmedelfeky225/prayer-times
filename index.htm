@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="node_modules/axios/dist/axios.min.js"></script>
+    <style>
+        *{
+            box-sizing: border-box;
+
+        }
+        body{
+            background-image: linear-gradient(45deg, #240165,#05001c);
+            direction: rtl;
+           font-family: 'Alexandria','sans-serif';
+           margin: 0;
+           height: calc(100vh + 70px); 
+        }
+        .date{
+            color: #fff;
+        }
+        @font-face {
+            font-family: 'Alexandria';
+            src: url('font/Alexandria-VariableFont_wght.ttf');
+        }
+        .date{
+            margin-top: 20px;
+        }
+       
+        .date h4{
+            margin-right: 30px;
+            font-weight: 200;
+            font-size: 30px;
+            padding-bottom: 8px;
+        }
+        h1,h2,h3,h4,h5,h6{
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .card{
+           
+            height: 190px;
+        }
+        .card .header{
+            background-color: #3c1486f1;
+            color: #fff;
+            padding: 5px;
+            font-weight: 300;
+            font-size: 20px;
+        }
+        .card .body{
+          background-color: #fff;
+          height: 80%;
+        }
+        .center{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (min-width:992px) {
+          .date h1{
+            margin-right: 30px;
+            font-weight: 300;
+            font-size: 160px;
+        }
+        }
+        @media (max-width:991px) {
+          .date h1{
+            margin-right: 30px;
+            font-weight: 300;
+            font-size: 50px;
+        }
+        }
+        .container-card {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 20px;
+          padding: 20px;
+      }
+      @media (min-width:500px) {
+        .container-card {
+          gap: 60px;
+      }      
+      }
+    </style>
+</head>
+<body>
+    <div style="margin: 0;">
+        <div class="date">
+            <!-- city name -->
+         <h1 id="city">القاهرة</h1>
+          <!-- city name -->
+          <!-- date -->
+           <h4 id="datee">الجمعه 24 نوفمبر</h4>
+           <!-- date -->
+            <hr style="margin: 0 40px; border-color: rgba(0, 0, 255, 0.185);">
+        </div>
+        <!-- container-card -->
+        <div class="container-card row" style=" margin-top: 40px;">
+            <!-- card -->
+           <div class="card">
+              <div class="header">الفجر</div>
+             <div class="body center">
+                <h1 id="fgrTime">4:30</h1>
+             </div>
+           </div>
+             <!-- card -->
+                   <!-- card -->
+           <div class="card">
+              <div class="header">الشروق</div>
+             <div class="body center">
+                <h1 id="shrTime">4:30</h1>
+             </div>
+           </div>
+             <!-- card -->
+                   <!-- card -->
+           <div class="card">
+              <div class="header">الضهر</div>
+             <div class="body center">
+                <h1 id="duhrTime">4:30</h1>
+             </div>
+           </div>
+             <!-- card -->
+                   <!-- card -->
+           <div class="card">
+              <div class="header">العصر</div>
+             <div class="body center">
+                <h1 id="asrTime">4:30</h1>
+             </div>
+           </div>
+             <!-- card -->
+                   <!-- card -->
+           <div class="card">
+              <div class="header">المغرب</div>
+             <div class="body center">
+                <h1 id="maqrapTime">4:30</h1>
+             </div>
+           </div>
+             <!-- card -->
+                   <!-- card -->
+           <div class="card">
+              <div class="header">العشاء</div>
+             <div class="body center">
+                <h1 id="ishTime">4:30</h1>
+             </div>
+           </div>
+        
+        </div>
+        <!-- container-card -->
+        <div class="center">
+                <select name="" id="select" class="center" style="width: 300px; height: 35px; font-family: 'Alexandria','sans-serif';background-color:#1a004d!important; color: #fff; padding: 5px; font-size: 20px; font-weight: 300; border-radius: 30px; margin: 50px 0;">
+                <option value="Al Qāhirah">القاهرة</option>
+                 <option value="Aswān">اسوان</option>
+                 <option value="Giza">الجيزة</option>
+                  <option value="Al Gharbīyah">الغربيه</option>
+                 <option value="Al Uqşur">الاقصر</option>
+                <option value="Sohag">سوهاج</option>
+                <option value="Al Minūfīyah">المنوفية</option>
+            </select>
+        </div>
+    </div>
+</body>
+<script>
+
+let option=document.querySelector("option")
+ let nameCities=[
+ {
+    nameEn:"Al Qāhirah",
+    nameAr:"القاهرة"
+ },
+  {
+    nameEn:"Aswān",
+    nameAr:"اسوان"
+ },
+  {
+    nameEn:"Giza",
+    nameAr:"الجيزة"
+ },
+  {
+    nameEn:"Al Gharbīyah",
+    nameAr:"الغربية"
+ },
+  {
+    nameEn:"Al Uqşur",
+    nameAr:"الأقصر"
+ },
+  {
+    nameEn:"Sohag",
+    nameAr:"سوهاج"
+ },
+   {
+    nameEn:"Al Minūfīyah",
+    nameAr:"المنوفية"
+ }
+ ]
+document.getElementById("select").addEventListener("change",(e)=>{
+gettimingsPrayer(e.currentTarget.value)
+ console.log(e.currentTarget.value)
+  for(cityy of nameCities){
+    if(e.currentTarget.value===cityy.nameEn){
+        document.getElementById("city").innerHTML=cityy.nameAr;
+    }
+  }
+})
+function gettimingsPrayer(city){
+    let params={
+        country:"Eg",
+        city:city,
+    }
+ axios.get(`http://api.aladhan.com/v1/timingsByCity`,{
+    params:params
+ }) 
+ .then((response)=>{
+     let data=response.data.data.timings
+    let dataG=response.data.data
+        let dateContent=`
+          <!-- date -->
+           <h4 class="date">${dataG.date.hijri.weekday.ar} - ${dataG.date.readable}</h4>
+            <!-- <hr style="margin: 0 40px; border-color: rgba(0, 0, 255, 0.185);"> -->
+    `
+   
+    console.log(data)
+    getTimingsforId("fgrTime",data.Fajr)
+    getTimingsforId("shrTime",data.Sunrise)
+    getTimingsforId("duhrTime",data.Dhuhr)
+    getTimingsforId("asrTime",data.Asr)
+    getTimingsforId("maqrapTime",data.Maghrib)
+    getTimingsforId("ishTime",data.Isha)  
+        document.getElementById("datee").innerHTML=dateContent;
+  
+ }) 
+}
+gettimingsPrayer("Al Qāhirah")
+function getTimingsforId(id,time){
+    document.getElementById(id).innerHTML=time;
+}
+</script>
+</html>
+
+
+
+
+    <!-- let dateContent=`
+            <!-- city name -->
+         <!-- <h1 class="city">${elemet}</h1> -->
+          <!-- city name -->
+          <!-- date -->
+           <!-- <h4 class="date">${dataG.date.hijri.weekday.ar} - ${dataG.date.readable}</h4> -->
+            <!-- <hr style="margin: 0 40px; border-color: rgba(0, 0, 255, 0.185);"> -->
+    <!-- `  -->
+-->
